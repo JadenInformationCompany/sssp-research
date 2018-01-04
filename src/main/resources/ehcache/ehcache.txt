@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache name="es" updateCheck="false">
+	<cacheManagerEventListenerFactory class="" properties=""/>
+
+	<!-- tomcat work目录 (JVM临时文件目录[java.io.tmpdir]) -->
+	<diskStore path="java.io.tmpdir"/>
+	
+	<terracottaConfig url="192.168.1.2:9510"/>
+	<!-- 
+		maxEntriesLocalHeap 堆内存中最大缓存对象数,
+		（等效于旧版本中的maxElementsInMemory属性 maxElementsInMemory (deprecated) 
+		maxBytesLocalHeap:如果设置了这个属性，maxEntriesLocalHeap将不能被利用
+		maxEntriesLocalDisk:磁盘中的最大对象数
+		maxBytesLocalDisk:像maxBytesLocalHeap属性
+		eternal:elements是否永久有效，如果为true，timeouts将被忽略，element将永不过期
+		timeToIdleSeconds:失效前的空闲秒数，允许空闲（发呆）的秒数，当eternal为false时，这个属性才有效，0为不限制
+		timeToLiveSeconds:失效前的存活秒数，创建时间到失效时间的间隔为存活时间，当eternal为false时，这个属性才有效，0为不限制
+		memoryStoreEvictionPolicy:内存回收策略，默认回收策略：最近最少使用Least Recently Used，
+		先进先出First In First Out，Less Frequently Used使用频率最低
+	-->
+	
+	<!-- 缓存命名规则，实体名称[.key字段名组合|.MethodName]，如果是用实体的主键作为key可以省略[.key字段名组合]。
+	如果是多个字段组合成的key，字段名之间用下划线分隔。如果用方法名做缓存的key，则缓存命名格式为：实体表名.MethodName -->
+	
+	<defaultCache
+		maxEntriesLocalHeap="1000"//堆内存中最大缓存对象数
+		eternal="false"//elements是否永久有效
+		timeToIdleSeconds="3600"//闲置秒数
+		timeToLiveSeconds="0"//存活秒数
+		overflowToDisk="true"
+		maxElementsOnDisk="10000000"
+		diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="1000"
+		memoryStoreEvictionPolicy="LRU">
+	</defaultCache>		
+
+	<!-- shiro -->
+    <cache name="shiro-authenticationCacheName"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true"
+           memoryStoreEvictionPolicy="LRU">
+           <terracotta/> 
+    </cache>		
+    <cache name="shiro-authorizationCacheName"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true"
+           memoryStoreEvictionPolicy="LRU">
+           <terracotta/>
+    </cache>
+	<cache name="shiro-activeSessionCache"
+	       maxEntriesLocalHeap="1000"
+	       eternal="false"
+	       timeToIdleSeconds="3600"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	       <terracotta/>
+	</cache>
+	
+ 	
+    <cache name="user-module-permissions"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true"
+           memoryStoreEvictionPolicy="LRU">
+    </cache>
+    			
+	<!-- 系统用户不缓存，一般用户登录不是很频繁，缓存用户信息无太多意义	 -->
+
+	<cache name="ZDFLB"
+	       maxEntriesLocalHeap="120"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+			
+	<!-- 所有字典表的字典项, key为zDFLBbh(分类字典编号)，接口字典为xTCPid.zDFLBbh(医保机构id与字典分类编号组合 -->
+	<cache name="DictItem.zDFLBbh"
+	       maxEntriesLocalHeap="256"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+				
+	<!-- 缓存编码生成规则,key为bm(表名)、zdm(字段名)-->
+	<cache name="FRNO.bm_zdm"
+	       maxEntriesLocalHeap="60"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+		
+	<!-- 序列号缓存,key为bm(表名)、zdm(字段名)和kSid(科室ID)组合 --> 
+	<cache name="FRNOCACHE.bm_zdm_kSid"
+	       maxEntriesLocalHeap="300"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>	
+	
+	<!-- 缓存药品信息, key为药品ID -->
+	<cache name="YPMLB"
+	       maxEntriesLocalHeap="1200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="YPPZB"
+	       maxEntriesLocalHeap="1200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>	
+	
+	<cache name="YPMLFB"
+	       maxEntriesLocalHeap="1200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+				
+	<!-- 药品客户端缓存信息 注意key是方法名，所以maxEntriesLocalHeap设置为1-->
+	<cache name="YPClientCacheInfo"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>	
+		
+	<!-- 缓存收费项目信息, key为收费项目ID -->
+	<cache name="SFXMB"
+	       maxEntriesLocalHeap="1000"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="SFXMFB"
+	       maxEntriesLocalHeap="1000"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<!-- 收费项目客户端缓存信息 注意key是方法名，所以maxEntriesLocalHeap设置为1-->
+	<cache name="SFXMClientCacheInfo"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>	
+
+	
+	<!-- 缓存材料信息, key为材料ID -->
+	<cache name="CLMLB"
+	       maxEntriesLocalHeap="1200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="CLPZB"
+	       maxEntriesLocalHeap="1200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+		
+	<cache name="CLMLFB"
+	       maxEntriesLocalHeap="1200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>	
+				
+	<!-- 材料客户端缓存信息 注意key是方法名，所以maxEntriesLocalHeap设置为1-->
+	<cache name="CLClientCacheInfo"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>	
+	
+	<!-- 按项目类别和项目ID存取病人费别比例信息，key = concat(xmlb, xmid) -->
+	<cache name="BRFBBL.XMLB_XMID"
+	       maxEntriesLocalHeap="600"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+			
+	<!-- 按方法名缓存收费项目 -->
+	<cache name="SFXMB.MethodName"
+	       maxEntriesLocalHeap="20"
+	       eternal="false"
+	       timeToIdleSeconds="3600"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+					
+	<!-- 缓存员工信息, key为方法名,由于key是方法名，所以这里maxEntriesLocalHeap对应的是方法个数，不是员工信息条数-->
+	<cache name="YG.MethodName"
+	       maxEntriesLocalHeap="15"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>		
+		
+	<!-- 缓存员工信息, key为员工ID -->
+	<cache name="YG"
+	       maxEntriesLocalHeap="200"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+			
+	<!-- 缓存科室信息, key为方法名,由于key是方法名，所以这里maxEntriesLocalHeap对应的是方法个数，不是科室信息条数-->
+	<cache name="KS.MethodName"
+	       maxEntriesLocalHeap="15"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<!-- 缓存科室信息, key为科室ID -->	
+	<cache name="KS"
+	       maxEntriesLocalHeap="60"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+		
+	<!-- 人员折扣比例设置： 注意key是方法名，所以maxEntriesLocalHeap设置为1-->
+	<cache name="RYZKSZ.MethodName"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+			
+	<!-- 缓存系统参数，按XTCSFL_id系统参数分类ID-->
+	<cache name="XTCS.xtcsflID"
+	       maxEntriesLocalHeap="50"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+		
+				
+	<!-- 根据药房ID和药品目录ID缓存药房库存记录流水号 -->
+	<cache name="YFKCB.kfid_xmid"
+	       maxEntriesLocalHeap="1000"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<!-- 根据库房ID和材料目录ID缓存物资库存记录流水号 -->
+	<cache name="WZKCB.kfid_xmid"
+	       maxEntriesLocalHeap="500"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="YBJG.All"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<!-- 按系统产品ID缓存接口的对码信息 -->
+	<cache name="JKDMB.XTCPid"
+	       maxEntriesLocalHeap="6"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+		
+	
+	<!-- 缓存医疗服务项目对码信息 -->
+	<cache name="JKYPYLFWXMDMB.xTCPid.xmlb.xmid"
+	       maxEntriesLocalHeap="1000"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+
+	<!-- 缓存接口医疗服务项目 -->
+	<cache name="JKYPYLFWXM"
+	       maxEntriesLocalHeap="1600"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="HYLB.All"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="MZGHLB.All"
+	       maxEntriesLocalHeap="1"
+	       eternal="false"
+	       timeToIdleSeconds="36000"
+	       timeToLiveSeconds="0"
+	       overflowToDisk="false"
+	       statistics="true"
+	       memoryStoreEvictionPolicy="LRU">
+	</cache>							
+</ehcache>

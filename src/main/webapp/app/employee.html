@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>员工表</title>
+<!-- jQuery -->
+<script type="text/javascript" src="/static/jquery/jquery-1.11.3.js"></script>
+
+<!-- 本页面脚本 -->
+<script type="text/javascript">
+	$(function() {
+		console.log('how are you');
+	});
+</script>
+
+</head>
+<body>
+	<div>你好吗</div>
+	<form action="/emp" method="post">
+		<input type="hidden" name="id">
+		<ul>
+			<li>
+				<lable>用户名</lable>
+				<div><input type="text" name="lastName"></div>
+			</li>
+			<li>
+				<lable>email</lable>
+				<div><input type="text" name="email"></div>
+			</li>
+			<li>
+				<lable>birth</lable>
+				<div><input type="date" name="birth"></div>
+			</li>
+			<li>
+				<lable>department</lable>
+				<div><input type="text" name="department"></div>
+			</li>
+		</ul>
+		<input type="submit" value="提交表单数据">
+	</form>
+</body>
+</html>
