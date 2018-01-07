@@ -2,10 +2,9 @@ package com.szhis.frsoft.repository.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.szhis.frsoft.entity.City;
@@ -14,7 +13,7 @@ import com.szhis.frsoft.repository.ICityDao;
 @Repository
 public class CityDaoImpl implements ICityDao {
 
-	@Resource
+	@Autowired
 	private SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")

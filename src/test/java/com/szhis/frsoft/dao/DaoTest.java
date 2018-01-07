@@ -2,9 +2,8 @@ package com.szhis.frsoft.dao;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.szhis.frsoft.BaseTest;
 import com.szhis.frsoft.entity.Brand;
@@ -14,10 +13,10 @@ import com.szhis.frsoft.repository.ICityDao;
 
 public class DaoTest extends BaseTest {
 
-	@Resource
+	@Autowired
 	private IBrandDao brandDao;
 
-	@Resource
+	@Autowired
 	private ICityDao cityDao;
 
 	@Test

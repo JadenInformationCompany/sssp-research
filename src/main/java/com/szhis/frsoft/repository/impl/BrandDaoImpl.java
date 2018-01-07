@@ -2,10 +2,9 @@ package com.szhis.frsoft.repository.impl;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.szhis.frsoft.entity.Brand;
@@ -14,7 +13,7 @@ import com.szhis.frsoft.repository.IBrandDao;
 @Repository
 public class BrandDaoImpl implements IBrandDao {
 
-	@Resource
+	@Autowired
 	protected SessionFactory sessionFactory;
 
 	@SuppressWarnings("unchecked")
