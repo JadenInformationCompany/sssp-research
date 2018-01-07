@@ -61,14 +61,14 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext
 				</prop>
-				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hbm2ddl.auto">create</prop>
+				<prop key="hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 		<property name="packagesToScan">
 			<list>
-				<value>com.po</value>
+				<value>com.szhis.frsoft.entity</value>
 			</list>
 		</property>
 	</bean>
@@ -78,10 +78,8 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<aop:config>
-		<aop:pointcut id="transactionPointCut" expression="execution(* com.dao..*.*(..))" />
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="transactionPointCut" />
-	</aop:config>
+	<!-- 开启aop注解的支持 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -92,14 +90,5 @@
 			<tx:method name="*" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
-
-	<aop:config>
-		<aop:aspect id="dataSourceAspect" ref="dataSourceInterceptor">
-			<aop:pointcut id="daoOne" expression="execution(* com.dao.one.*.*(..))" />
-			<aop:pointcut id="daoTwo" expression="execution(* com.dao.two.*.*(..))" />
-			<aop:before pointcut-ref="daoOne" method="setdataSourceOne" />
-			<aop:before pointcut-ref="daoTwo" method="setdataSourceTwo" />
-		</aop:aspect>
-	</aop:config>
 
 </beans>

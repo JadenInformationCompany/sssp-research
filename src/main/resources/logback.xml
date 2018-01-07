@@ -12,7 +12,7 @@
 <configuration scan="false" scanPeriod="60" debug="false">
 	<!-- 定义日志文件 输入位置，这个是全局变量，方便调用重复 -->
 	<!-- 使用/是绝对路径，没有就是使用相对路径 -->
-	<property name="log_dir" value="/logback" />
+	<property name="log_dir" value="d:/ex/logback" />
 	<!-- 日志最大的历史 30天 ，这个是全局变量，方便调用重复 -->
 	<property name="maxHistory" value="30" />
 
