@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.szhis.frsoft.entity.City;
 import com.szhis.frsoft.repository.ICityDao;
 
-@Repository
+//@Repository
 public class CityDaoImpl implements ICityDao {
 
 	@Autowired

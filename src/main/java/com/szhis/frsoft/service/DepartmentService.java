@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.szhis.frsoft.entity.Department;
 import com.szhis.frsoft.repository.DepartmentRepository;
 
-@Service
+//@Service
 public class DepartmentService {
 	@Autowired
 	private DepartmentRepository departmentRepository;

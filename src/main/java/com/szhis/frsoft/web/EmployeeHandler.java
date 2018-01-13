@@ -17,7 +17,7 @@ import com.szhis.frsoft.entity.Employee;
 import com.szhis.frsoft.service.DepartmentService;
 import com.szhis.frsoft.service.EmployeeService;
 
-@Controller
+//@Controller
 public class EmployeeHandler {
 	@Autowired
 	private EmployeeService employeeService;

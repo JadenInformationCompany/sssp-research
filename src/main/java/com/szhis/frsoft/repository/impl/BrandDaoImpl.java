@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.szhis.frsoft.entity.Brand;
 import com.szhis.frsoft.repository.IBrandDao;
 
-@Repository
+//@Repository
 public class BrandDaoImpl implements IBrandDao {
 
 	@Autowired

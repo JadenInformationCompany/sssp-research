@@ -19,7 +19,7 @@ public class DataSourceAdvice {
 	 */
 	@Before(value = "execution(* com.szhis.frsoft.repository.impl.BrandDaoImpl.*(..))")
 	public void setdataSourceOne(JoinPoint jp) {
-		DatabaseContextHolder.setCustomerType("dataSourceOne");
+		DatabaseContextHolder.setDSType("dataSourceOne");
 	}
 
 	/**
@@ -30,6 +30,6 @@ public class DataSourceAdvice {
 	 */
 	@Before(value = "execution(* com.szhis.frsoft.repository.impl.CityDaoImpl.*(..))")
 	public void setdataSourceTwo(JoinPoint jp) {
-		DatabaseContextHolder.setCustomerType("dataSourceTwo");
+		DatabaseContextHolder.setDSType("dataSourceTwo");
 	}
 }

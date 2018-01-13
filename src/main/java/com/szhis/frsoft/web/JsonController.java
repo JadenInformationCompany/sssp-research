@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.szhis.frsoft.entity.Employee;
 import com.szhis.frsoft.service.EmployeeService;
 
-@Controller
+//@Controller
 public class JsonController {
 	@Autowired
 	private EmployeeService employeeService;

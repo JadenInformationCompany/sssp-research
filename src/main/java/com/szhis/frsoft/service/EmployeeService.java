@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.szhis.frsoft.entity.Employee;
 import com.szhis.frsoft.repository.EmployeeRepository;
 
-@Service
+//@Service
 public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
