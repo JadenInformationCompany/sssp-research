@@ -8,7 +8,7 @@ import com.szhis.frsoft.entity.JavaPojo;
 import com.szhis.frsoft.repository.TransactionTestDao;
 
 public class TransactionTest extends BaseTest {
-	@Autowired
+	//@Autowired
 	private TransactionTestDao transactionTestDao;
 
 	/**

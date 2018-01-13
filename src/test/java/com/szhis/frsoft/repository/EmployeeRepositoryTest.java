@@ -17,9 +17,9 @@ import com.szhis.frsoft.entity.Department;
 import com.szhis.frsoft.entity.Employee;
 
 public class EmployeeRepositoryTest extends BaseTest {
-	@Autowired
+	//@Autowired
 	private EmployeeRepository employeeRepository;
-	@Autowired
+	//@Autowired
 	private DepartmentRepository departmentRepository;
 
 	@Test

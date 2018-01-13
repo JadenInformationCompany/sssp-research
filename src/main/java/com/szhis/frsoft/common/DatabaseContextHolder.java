@@ -13,23 +13,23 @@ public class DatabaseContextHolder {
 	private static final ThreadLocal<String> THREAD_DATA_SOURCE = new ThreadLocal<String>();
 
 	/**
-	 * @desc 使用aop设置
-	 * @author jaden.liu
-	 * @createTime 2018年1月13日 下午3:54:06
-	 * @param customerType void
-	 */
-	public static void setDSType(String customerType) {
-		THREAD_DATA_SOURCE.set(customerType);
-	}
-
-	/**
 	 * @desc AbstractRoutingDataSource的实现类调用该方法
 	 * @author jaden.liu
 	 * @createTime 2018年1月13日 下午3:54:25
 	 * @return String
 	 */
-	public static String getDSType() {
+	public static String getDataSource() {
 		return THREAD_DATA_SOURCE.get();
+	}
+
+	/**
+	 * @desc 使用aop设置
+	 * @author jaden.liu
+	 * @createTime 2018年1月13日 下午3:54:06
+	 * @param customerType void
+	 */
+	public static void setDataSource(String dataSource) {
+		THREAD_DATA_SOURCE.set(dataSource);
 	}
 
 	/**
@@ -37,7 +37,8 @@ public class DatabaseContextHolder {
 	 * @author jaden.liu
 	 * @createTime 2018年1月13日 下午3:54:46 void
 	 */
-	public static void clearDSType() {
+	public static void clearDataSource() {
 		THREAD_DATA_SOURCE.remove();
 	}
+
 }

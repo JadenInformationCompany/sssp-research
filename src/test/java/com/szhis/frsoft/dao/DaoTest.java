@@ -13,11 +13,17 @@ import com.szhis.frsoft.repository.ICityDao;
 
 public class DaoTest extends BaseTest {
 
-	@Autowired
+	//@Autowired
 	private IBrandDao brandDao;
 
 	@Autowired
 	private ICityDao cityDao;
+
+	@Test
+	public void test_a2() {
+		List<City> cities = cityDao.find();
+		System.out.println(cities.size());
+	}
 
 	@Test
 	public void test_a() {
