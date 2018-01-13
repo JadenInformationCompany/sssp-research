@@ -5,8 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.test.DataSource;
-
 /**
  * @desc 指定使用slave数据库
  * @author tomas.liu
@@ -15,10 +13,10 @@ import com.test.DataSource;
  */
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DataSourceSlave {
-	String name() default DataSource.testDataSource1;
-	 
-    public static String testDataSource1 = "testDataSource1";
- 
-    public static String testDataSource2 = "testDataSource2";
+public @interface DataSourceExchange {
+	String name() default DataSourceExchange.dataSourceOne;
+
+	public static String dataSourceOne = "dataSourceOne";
+	public static String dataSourceTwo = "dataSourceTwo";
+
 }

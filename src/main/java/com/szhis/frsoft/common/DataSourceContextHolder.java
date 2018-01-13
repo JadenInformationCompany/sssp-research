@@ -6,7 +6,7 @@ package com.szhis.frsoft.common;
  * @createTime 2018年1月13日 下午3:58:22
  * @version v1.0
  */
-public class DatabaseContextHolder {
+public class DataSourceContextHolder {
 	/**
 	 * 注意：数据源标识保存在线程变量中，避免多线程操作数据源时互相干扰
 	 */
