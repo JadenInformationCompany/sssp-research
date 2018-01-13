@@ -11,12 +11,12 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
 	/**
-	 * 当前使用的dataSource
-	 * @see org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource#determineCurrentLookupKey()
+	 * spring预留接口，
+	 * 用于动态切换数据源
 	 */
 	@Override
 	protected Object determineCurrentLookupKey() {
-		return DatabaseContextHolder.getDataSource();
+		return DataSourceContextHolder.getDataSource();
 	}
 
 }
