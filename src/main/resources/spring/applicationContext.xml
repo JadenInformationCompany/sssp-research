@@ -82,14 +82,15 @@
 	<!-- 开启aop注解的支持 -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-	<!-- 拦截器方式配置事物 -->
+	<!-- 定义事务传播属性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
+			<!-- add,update,delete传播方式 -->
 			<tx:method name="add*" propagation="REQUIRED" />
 			<tx:method name="insert*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
 			<tx:method name="delete*" propagation="REQUIRED" />
-
+			<!-- 查询传播方式 -->
 			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
 			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
 			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
