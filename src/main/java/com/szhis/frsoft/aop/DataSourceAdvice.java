@@ -20,9 +20,9 @@ public class DataSourceAdvice {
 	 * @createTime 2018年1月7日 下午10:35:08
 	 * @param jp void
 	 */
-	@Before(value = "execution(* com.szhis.frsoft.repository.impl.*.*(..))")
+	@Before(value = "execution(* com.szhis.frsoft.repository.impl.CityDaoImpl.*(..))")
 	public void setdataSourceTwo(Method method, Object[] args, Object target) {
-		System.out.println("two-------------two-------------two");
+		System.out.println("twotwotwo");
 		if (method.isAnnotationPresent(DataSourceExchange.class)) {
 			DataSourceExchange datasource = method.getAnnotation(DataSourceExchange.class);
 			DataSourceContextHolder.setDataSource(datasource.name());
