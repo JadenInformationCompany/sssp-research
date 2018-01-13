@@ -12,10 +12,8 @@ import com.szhis.frsoft.repository.IBrandDao;
 import com.szhis.frsoft.repository.ICityDao;
 
 public class DaoTest extends BaseTest {
-
 	@Autowired
 	private IBrandDao brandDao;
-
 	@Autowired
 	private ICityDao cityDao;
 

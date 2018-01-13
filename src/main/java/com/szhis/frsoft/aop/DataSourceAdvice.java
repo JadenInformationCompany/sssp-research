@@ -20,7 +20,7 @@ public class DataSourceAdvice {
 	 * @createTime 2018年1月7日 下午10:35:08
 	 * @param jp void
 	 */
-	@Before(value = "execution(* com.szhis.frsoft.repository.impl.CityDaoImpl.*(..))")
+	@Before(value = "execution(* com.szhis.frsoft.repository.**.*(..))")
 	public void setdataSourceTwo(Method method, Object[] args, Object target) {
 		System.out.println("two--------------two--------------two");
 		if (method.isAnnotationPresent(DataSourceExchange.class)) {
