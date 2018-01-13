@@ -7,7 +7,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"
+	default-autowire="byName">
 	<!-- springIOC容器，托管所有需要托管的bean，除了springMVC容器托管的 -->
 	<!-- 配置自动扫描的包 -->
 	<context:component-scan base-package="com.szhis.frsoft">
@@ -20,6 +21,7 @@
 	<!-- 配置数据源，引用外部属性文件 -->
 	<context:property-placeholder location="classpath:property/db.properties" />
 
+	<!-- 数据源1: mysql -->
 	<bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${dbOne.jdbc.driverClass}" />
@@ -31,6 +33,7 @@
 		<property name="maxPoolSize" value="${dbOne.jdbc.maxPoolSize}" />
 	</bean>
 
+	<!-- 数据源2: mysql -->
 	<bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${dbTwo.jdbc.driverClass}" />
@@ -45,8 +48,8 @@
 	<bean id="dynamicDataSource" class="com.szhis.frsoft.common.DynamicDataSource">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
-				<entry value-ref="dataSourceOne" key="dataSourceOne"></entry>
-				<entry value-ref="dataSourceTwo" key="dataSourceTwo"></entry>
+				<entry key="dataSourceOne" value-ref="dataSourceOne"></entry>
+				<entry key="dataSourceTwo" value-ref="dataSourceTwo"></entry>
 			</map>
 		</property>
 		<property name="defaultTargetDataSource" ref="dataSourceOne">
@@ -58,6 +61,11 @@
 		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="hibernateProperties">
 			<props>
+				<!-- 链接释放策略 on_close | after_transaction | after_statement | auto -->
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext
+				</prop>
+				<!-- bean与表映射策略 -->
 				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
 				<!-- 自动生成表，不建议使用 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
@@ -67,22 +75,24 @@
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
 			</props>
 		</property>
+		<!-- 扫描hibernate注解配置的entity -->
 		<property name="packagesToScan">
 			<list>
-				<value>com.szhis.frsoft.entity</value>
+				<value>com.szhis.frsoft.entity.*</value>
 			</list>
 		</property>
 	</bean>
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<!-- 同一种数据库只需要配置一个sessionFactory -->
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<!-- 开启aop注解的支持 -->
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- 开启注解事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- 定义事务传播属性 -->
+	<!-- 定义aop事务传播属性 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<!-- add,update,delete传播方式 -->
@@ -96,5 +106,8 @@
 			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
+
+	<!-- 开启aop注解的支持 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 </beans>
