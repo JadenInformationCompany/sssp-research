@@ -2,7 +2,6 @@ package com.szhis.frsoft.entity;
 
 import java.util.Date;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +15,6 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -25,10 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "SSSP_EMPLOYEES")
 @Entity
-//可以使用二级缓存
-@Cacheable(true)
-//指定使用的缓存
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "mycache")
 public class Employee {
 	private Integer id;
 	private String lastName;

@@ -22,7 +22,7 @@ public class DataSourceAdvice {
 	 */
 	@Before(value = "execution(* com.szhis.frsoft.repository.impl.CityDaoImpl.*(..))")
 	public void setdataSourceTwo(Method method, Object[] args, Object target) {
-		System.out.println("twotwotwo");
+		System.out.println("two--------------two--------------two");
 		if (method.isAnnotationPresent(DataSourceExchange.class)) {
 			DataSourceExchange datasource = method.getAnnotation(DataSourceExchange.class);
 			DataSourceContextHolder.setDataSource(datasource.name());

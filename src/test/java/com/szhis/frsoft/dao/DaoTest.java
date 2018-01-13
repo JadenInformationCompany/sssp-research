@@ -13,7 +13,7 @@ import com.szhis.frsoft.repository.ICityDao;
 
 public class DaoTest extends BaseTest {
 
-	//@Autowired
+	@Autowired
 	private IBrandDao brandDao;
 
 	@Autowired
