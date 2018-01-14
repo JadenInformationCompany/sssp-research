@@ -21,8 +21,8 @@ public class Department {
 	private String departmentName;
 
 	@Id
-	@GeneratedValue(generator = "Department_ID", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "Department_ID", table = "FRID_DS", pkColumnName = "name", valueColumnName = "next", pkColumnValue = "Department_id", allocationSize = 1, initialValue = 100)
+	@GeneratedValue(generator = "Department_id", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "Department_id", table = "FRID_DS", pkColumnName = "name", valueColumnName = "next", pkColumnValue = "Department_id", allocationSize = 1, initialValue = 100)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;

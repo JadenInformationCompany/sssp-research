@@ -31,8 +31,8 @@ public class Employee {
 	private Department department;
 
 	@Id
-	@GeneratedValue(generator = "Employee_ID", strategy = GenerationType.TABLE)
-	@TableGenerator(name = "Employee_ID", table = "FRID_DS", pkColumnName = "name", valueColumnName = "next", pkColumnValue = "Employee_id", allocationSize = 1, initialValue = 100)
+	@GeneratedValue(generator = "Employee_id", strategy = GenerationType.TABLE)
+	@TableGenerator(name = "Employee_id", table = "FRID_DS", pkColumnName = "name", valueColumnName = "next", pkColumnValue = "Employee_id", allocationSize = 1, initialValue = 100)
 	@Column(name = "id")
 	public Integer getId() {
 		return id;

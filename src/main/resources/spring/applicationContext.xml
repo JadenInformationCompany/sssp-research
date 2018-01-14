@@ -7,8 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd"
-	default-autowire="byName">
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	<!-- springIOC容器，托管所有需要托管的bean，除了springMVC容器托管的 -->
 	<!-- 配置自动扫描的包 -->
 	<context:component-scan base-package="com.szhis.frsoft">
@@ -21,9 +20,8 @@
 	<!-- 配置数据源，引用外部属性文件 -->
 	<context:property-placeholder location="classpath:property/db.properties" />
 
-	<!-- 数据源1: mysql -->
-	<bean id="dataSourceOne" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
+	<!-- 配置连接池（数据源），引用外部属性文件 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${dbOne.jdbc.driverClass}" />
 		<property name="jdbcUrl" value="${dbOne.jdbc.url}" />
 		<property name="user" value="${dbOne.jdbc.user}" />
@@ -33,75 +31,50 @@
 		<property name="maxPoolSize" value="${dbOne.jdbc.maxPoolSize}" />
 	</bean>
 
-	<!-- 数据源2: mysql -->
-	<bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="${dbTwo.jdbc.driverClass}" />
-		<property name="jdbcUrl" value="${dbTwo.jdbc.url}" />
-		<property name="user" value="${dbTwo.jdbc.user}" />
-		<property name="password" value="${dbTwo.jdbc.password}" />
-		<property name="initialPoolSize" value="${dbTwo.jdbc.initialPoolSize}" />
-		<property name="minPoolSize" value="${dbTwo.jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${dbTwo.jdbc.maxPoolSize}" />
-	</bean>
-
-	<bean id="dynamicDataSource" class="com.szhis.frsoft.common.DynamicDataSource">
-		<property name="targetDataSources">
-			<map key-type="java.lang.String">
-				<entry key="dataSourceOne" value-ref="dataSourceOne"></entry>
-				<entry key="dataSourceTwo" value-ref="dataSourceTwo"></entry>
-			</map>
+	<!-- 配置 JPA 的 EntityManagerFactory -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置orm实现者:hibernate,mybatis -->
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
 		</property>
-		<property name="defaultTargetDataSource" ref="dataSourceOne">
-		</property>
-	</bean>
-
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dynamicDataSource" />
-		<property name="hibernateProperties">
+		<!-- 扫描jpa需要持久化的entity -->
+		<property name="packagesToScan" value="com.szhis.frsoft.entity"></property>
+		<property name="jpaProperties">
 			<props>
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
 				<!-- 自动生成表，不建议使用 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<!-- 配置连接的数据库:mysql,sqlServer,oracle -->
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+				<!-- 二级缓存配置 -->
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.region.factory_class">
+					org.hibernate.cache.ehcache.EhCacheRegionFactory
+				</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">ehcache/ehcache.xml</prop>
 			</props>
 		</property>
-		<!-- 扫描hibernate注解配置的entity -->
-		<property name="packagesToScan">
-			<list>
-				<value>com.szhis.frsoft.entity</value>
-			</list>
-		</property>
+		<!-- 配置使用二级缓存的模式：只允许带有 @Cacheable 的类使用二级缓存 -->
+		<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>
 	</bean>
 
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<!-- 同一种数据库只需要配置一个sessionFactory -->
-		<property name="sessionFactory" ref="sessionFactory" />
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>
 
-	<!-- 开启注解事务 -->
+	<!-- 配置支持基于注解的事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- 定义aop事务传播属性 -->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<!-- add,update,delete传播方式 -->
-			<tx:method name="add*" propagation="REQUIRED" />
-			<tx:method name="insert*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="delete*" propagation="REQUIRED" />
-			<!-- 查询传播方式 -->
-			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
-			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
-
-	<!-- 开启aop注解的支持 -->
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!-- 配置 SpringData,启用扫描并自动创建代理的功能 -->
+	<jpa:repositories base-package="com.szhis.frsoft.repository"
+		transaction-manager-ref="transactionManager"
+		entity-manager-factory-ref="entityManagerFactory">
+	</jpa:repositories>
 
 </beans>

@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/resources/spring/applicationContext.xml</config>
 		<config>src/main/resources/spring/aa-back.xml</config>
+		<config>src/main/resources/spring/a2-back.xml</config>
 	</configs>
 	<autoconfigs>
 		<config>src/main/webapp/WEB-INF/spring-mvc.xml</config>

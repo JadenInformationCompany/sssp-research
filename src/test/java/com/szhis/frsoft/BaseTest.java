@@ -1,8 +1,5 @@
 package com.szhis.frsoft;
 
-import javax.annotation.Resource;
-import javax.sql.DataSource;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.annotation.Rollback;
@@ -19,12 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 //默认事务回滚
 @Rollback(true)
 public class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
-
-	@Override
-	//@Resource(name = "dataSourceOne")
-	public void setDataSource(DataSource dataSource) {
-		super.setDataSource(dataSource);
-	}
 
 	/**
 	 * @desc 添加maven打包时不出现test错误日志提示
