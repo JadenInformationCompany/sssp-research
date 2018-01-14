@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "BTSF_BRAND")
+@Table(name = "SSSP_BRAND")
 public class Brand {
 
 	private String id;

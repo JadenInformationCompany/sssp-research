@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class BaseTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Override
-	@Resource(name = "dataSourceOne")
+	//@Resource(name = "dataSourceOne")
 	public void setDataSource(DataSource dataSource) {
 		super.setDataSource(dataSource);
 	}

@@ -25,7 +25,6 @@ public class DataSourceAdvice {
 	 */
 	@Before(value = "execution(* com.szhis.frsoft.repository.*.*(..))")
 	public void beforeRunning(JoinPoint point) throws Throwable {
-		System.out.println("two--------------two--------------two");
 		Class<?> target = point.getTarget().getClass();
 		MethodSignature signature = (MethodSignature) point.getSignature();
 		// 默认使用目标类型的注解，如果没有则使用其实现接口的注解

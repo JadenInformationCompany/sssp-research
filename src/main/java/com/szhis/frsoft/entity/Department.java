@@ -1,6 +1,5 @@
 package com.szhis.frsoft.entity;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +14,6 @@ import javax.persistence.TableGenerator;
  * @createTime 2017年12月15日 下午8:00:18
  * @version v1.0
  */
-@Cacheable(true)
 @Table(name = "SSSP_DEPARTMENTS")
 @Entity
 public class Department {

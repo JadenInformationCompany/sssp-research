@@ -29,7 +29,6 @@ public class DataSourceContextHolder {
 	 * @param customerType void
 	 */
 	public static void setDataSource(String dataSource) {
-		System.out.println("aaaaaa-----------------------aaaaaaaaaaaaaaaa");
 		THREAD_DATA_SOURCE.set(dataSource);
 	}
 

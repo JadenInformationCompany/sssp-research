@@ -61,12 +61,6 @@
 		<property name="dataSource" ref="dynamicDataSource" />
 		<property name="hibernateProperties">
 			<props>
-				<!-- 链接释放策略 on_close | after_transaction | after_statement | auto -->
-				<prop key="hibernate.connection.release_mode">after_transaction</prop>
-				<prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext
-				</prop>
-				<!-- bean与表映射策略 -->
-				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
 				<!-- 自动生成表，不建议使用 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
@@ -78,7 +72,7 @@
 		<!-- 扫描hibernate注解配置的entity -->
 		<property name="packagesToScan">
 			<list>
-				<value>com.szhis.frsoft.entity.*</value>
+				<value>com.szhis.frsoft.entity</value>
 			</list>
 		</property>
 	</bean>

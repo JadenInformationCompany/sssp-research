@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "CITY")
+@Table(name = "SSSP_CITY")
 public class City {
 
 	private Integer id;
