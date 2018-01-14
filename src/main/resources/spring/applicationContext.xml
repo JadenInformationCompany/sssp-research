@@ -20,9 +20,10 @@
 
 	<!-- 配置数据源，引用外部属性文件 -->
 	<context:property-placeholder location="classpath:property/db.properties" />
-
-	<!-- 配置连接池（数据源），引用外部属性文件 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	
+	<!-- 数据源1: mysql -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
 		<property name="driverClass" value="${dbOne.jdbc.driverClass}" />
 		<property name="jdbcUrl" value="${dbOne.jdbc.url}" />
 		<property name="user" value="${dbOne.jdbc.user}" />
@@ -30,6 +31,18 @@
 		<property name="initialPoolSize" value="${dbOne.jdbc.initialPoolSize}" />
 		<property name="minPoolSize" value="${dbOne.jdbc.minPoolSize}" />
 		<property name="maxPoolSize" value="${dbOne.jdbc.maxPoolSize}" />
+	</bean>
+
+	<!-- 数据源2: mysql -->
+	<bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${dbTwo.jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${dbTwo.jdbc.url}" />
+		<property name="user" value="${dbTwo.jdbc.user}" />
+		<property name="password" value="${dbTwo.jdbc.password}" />
+		<property name="initialPoolSize" value="${dbTwo.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${dbTwo.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${dbTwo.jdbc.maxPoolSize}" />
 	</bean>
 
 	<!-- 配置 JPA 的 EntityManagerFactory -->
