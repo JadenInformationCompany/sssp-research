@@ -16,10 +16,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "SSSP_EMPLOYEES")
 @Entity
@@ -69,8 +67,7 @@ public class Employee {
 	 * @return Date
 	 */
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	//@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	public Date getBirth() {
 		return birth;
 	}
@@ -97,7 +94,6 @@ public class Employee {
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DEPARTMENT_ID")
-	@JsonIgnore
 	public Department getDepartment() {
 		return department;
 	}

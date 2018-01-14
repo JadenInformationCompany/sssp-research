@@ -14,7 +14,6 @@
     <!-- 本页面脚本 -->
     <script type="text/javascript">
         $(function () {
-            console.log('how are you');
             //扩展jQuery方法
             $.fn.serializeJson = function () {
                 var serializeObj = {};
@@ -33,6 +32,7 @@
                 return JSON.stringify(serializeObj);
             };
         });
+
         function submitForm() {
             var flag = $('#formAdd').form('enableValidation').form('validate');
             if (!flag) {
@@ -58,6 +58,7 @@
 
 </head>
 <body>
+<div style="margin:20px 0;"></div>
 <div class="easyui-panel" title="这个是我的主题" style="width:400px">
     <div style="padding:10px 60px 20px 60px">
         <form id="formAdd" method="post">

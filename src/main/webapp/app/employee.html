@@ -3,40 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <title>员工表</title>
-    <!-- jQuery -->
+    <!-- jQuery简化dom操作 -->
     <script type="text/javascript" src="/static/jquery/jquery-1.11.3.js"></script>
-
+    <!-- easyui界面渲染 -->
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
+    <!-- layer弹出层 -->
+    <script type="text/javascript" src="/static/layui/layer/layer.js"></script>
     <!-- 本页面脚本 -->
     <script type="text/javascript">
         $(function () {
-            console.log('how are you');
+            //扩展jQuery方法
+            $.fn.serializeJson = function () {
+                var serializeObj = {};
+                var array = this.serializeArray();
+                $(array).each(function () {
+                    //判断有单值和多值分析
+                    if (serializeObj[this.name]) {
+                        //适用于有多个值的输入控件，复选框、多选的select
+                        if ($.isArray(serializeObj[this.name])) {
+                            serializeObj[this.name].push(this.value);
+                        } else {
+                            serializeObj[this.name] = [serializeObj[this.name], this.value];
+                        }
+                    } else {
+                        //适用于只有一个值的输入控件，文本框
+                        var idx = this.name.indexOf('\.');
+                        if (idx > 0) {
+                            //判断是否层次例如:dept.name=dept:{name:value}
+                            var firstLevel = this.name.substring(0, idx);
+                            var secondlevel = this.name.substring(idx + 1);
+                            var temp = {};
+                            temp[secondlevel] = this.value;
+                            serializeObj[firstLevel] = temp;
+                        } else {
+                            serializeObj[this.name] = this.value;
+                        }
+                    }
+                });
+                return JSON.stringify(serializeObj);
+            };
         });
+
+        function submitForm() {
+            var flag = $('#formAdd').form('enableValidation').form('validate');
+            if (!flag) {
+                return false;
+            }
+            var data = $('#formAdd').serializeJson();
+            $.ajax({
+                url: '/api/employee',
+                type: 'post',
+                data: data,
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (resp) {
+                    layer.alert('你好吗' + JSON.stringify(resp));
+                }
+            });
+        }
+
+        function clearForm() {
+            $('#formAdd').form('clear');
+        }
     </script>
 
 </head>
 <body>
-<div>你好吗</div>
-<form action="/emp" method="post">
-    <input type="hidden" name="id">
-    <ul>
-        <li>
-            <lable>用户名</lable>
-            <div><input type="text" name="lastName"></div>
-        </li>
-        <li>
-            <lable>email</lable>
-            <div><input type="text" name="email"></div>
-        </li>
-        <li>
-            <lable>birth</lable>
-            <div><input type="date" name="birth"></div>
-        </li>
-        <li>
-            <lable>department</lable>
-            <div><input type="text" name="department"></div>
-        </li>
-    </ul>
-    <input type="submit" value="提交表单数据">
-</form>
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" title="New Topic" style="width:400px">
+    <div style="padding:10px 60px 20px 60px">
+        <form id="formAdd" method="post">
+            <input type="hidden" name="id">
+            <table cellpadding="5">
+                <tr>
+                    <td>lastName:</td>
+                    <td><input class="easyui-textbox" type="text" name="lastName" data-options="required:true"/></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input class="easyui-textbox" type="text" name="email"
+                               data-options="required:true,validType:'email'"/></td>
+                </tr>
+                <tr>
+                    <td>birth:</td>
+                    <td><input class="easyui-textbox" type="date" name="birth" data-options="required:true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>department:</td>
+                    <td>
+                        <select class="easyui-combobox" name="department.id">
+                            <option value="1">Arabic</option>
+                            <option value="2">Bulgarian</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div style="text-align:center;padding:5px">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>
