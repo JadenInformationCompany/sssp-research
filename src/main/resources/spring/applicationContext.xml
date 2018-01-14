@@ -43,20 +43,12 @@
 		<property name="packagesToScan" value="com.szhis.frsoft.entity"></property>
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
 				<!-- 自动生成表，不建议使用 -->
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.format_sql">true</prop>
 				<!-- 配置连接的数据库:mysql,sqlServer,oracle -->
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
-				<!-- 二级缓存配置 -->
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<prop key="hibernate.cache.region.factory_class">
-					org.hibernate.cache.ehcache.EhCacheRegionFactory
-				</prop>
-				<prop key="net.sf.ehcache.configurationResourceName">ehcache/ehcache.xml</prop>
 			</props>
 		</property>
 		<!-- 配置使用二级缓存的模式：只允许带有 @Cacheable 的类使用二级缓存 -->
