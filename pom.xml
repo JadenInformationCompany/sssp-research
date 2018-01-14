@@ -9,7 +9,7 @@
 	<!--配置版本号 -->
 	<properties>
 		<mysql.version>5.1.32</mysql.version>
-		<hibernate.version>5.1.0.Final</hibernate.version>
+		<hibernate.version>4.2.4.Final</hibernate.version>
 		<querydsl.version>4.1.4</querydsl.version>
 		<spring.version>4.3.10.RELEASE</spring.version>
 	</properties>

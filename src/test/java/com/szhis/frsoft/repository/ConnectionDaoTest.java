@@ -13,7 +13,7 @@ import com.szhis.frsoft.BaseTest;
 
 public class ConnectionDaoTest extends BaseTest {
 	public final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-	@Autowired
+	//@Autowired
 	private DataSource ds;
 
 	/**

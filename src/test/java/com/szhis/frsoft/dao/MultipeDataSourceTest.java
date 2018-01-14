@@ -11,30 +11,30 @@ import com.szhis.frsoft.entity.City;
 import com.szhis.frsoft.repository.IBrandDao;
 import com.szhis.frsoft.repository.ICityDao;
 
-public class DaoTest extends BaseTest {
+public class MultipeDataSourceTest extends BaseTest {
 	@Autowired
-	private IBrandDao brandDao;
+	private IBrandDao iBrandDao;
 	@Autowired
-	private ICityDao cityDao;
+	private ICityDao iCityDao;
 
 	@Test
 	public void test_a2() {
-		List<City> cities = cityDao.find();
+		List<City> cities = iCityDao.find();
 		System.out.println(cities.size());
 	}
 
 	@Test
 	public void test_a() {
-		List<Brand> brands = brandDao.findAll();
+		List<Brand> brands = iBrandDao.findAll();
 		System.out.println(brands.size());
 	}
 
 	@Test
 	public void testList() {
-		List<Brand> brands = brandDao.findAll();
+		List<Brand> brands = iBrandDao.findAll();
 		System.out.println(brands.size());
 
-		List<City> cities = cityDao.find();
+		List<City> cities = iCityDao.find();
 		System.out.println(cities.size());
 	}
 }
