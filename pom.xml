@@ -9,9 +9,11 @@
 	<!--配置版本号 -->
 	<properties>
 		<mysql.version>5.1.32</mysql.version>
-		<hibernate.version>4.2.4.Final</hibernate.version>
-		<querydsl.version>4.1.4</querydsl.version>
 		<spring.version>4.3.10.RELEASE</spring.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<querydsl.version>4.1.4</querydsl.version>
+		<jackson.version>2.6.7</jackson.version>
+		<jackson-datatype-hibernate4.version>2.6.7</jackson-datatype-hibernate4.version>
 	</properties>
 
 	<dependencies>
@@ -190,11 +192,7 @@
 			<artifactId>jboss-logging</artifactId>
 			<version>3.3.0.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate.common</groupId>
-			<artifactId>hibernate-commons-annotations</artifactId>
-			<version>5.0.1.Final</version>
-		</dependency>
+		<!-- hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -306,17 +304,28 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.7.4</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.7.4</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.7.4</version>
+			<version>${jackson.version}</version>
+		</dependency>
+		<!-- 解决Json序列化异常 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jaxb-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<version>${jackson-datatype-hibernate4.version}</version>
 		</dependency>
 		<!-- hibernate.validate对象属性校验 -->
 		<dependency>
@@ -334,6 +343,12 @@
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>2.3.0</version>
+		</dependency>
+		<!-- 邮件 -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 	</dependencies>
 

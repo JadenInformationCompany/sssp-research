@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Table(name = "SSSP_EMPLOYEES")
 @Entity
@@ -88,12 +89,14 @@ public class Employee {
 
 	/**
 	 * @desc 这个是扩展表，要斩断与主表的json关联
+	 * @JoinColumn(name = "department_id") 对应数据库列名
 	 * @author jaden.liu
 	 * @createTime 2018年1月3日 下午8:06:03
 	 * @return Department
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "DEPARTMENT_ID")
+	@JoinColumn(name = "department_id")
+	@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer" })
 	public Department getDepartment() {
 		return department;
 	}

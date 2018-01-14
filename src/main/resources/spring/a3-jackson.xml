@@ -70,4 +70,44 @@
 		entity-manager-factory-ref="entityManagerFactory">
 	</jpa:repositories>
 
+	<!-- 处理jackson序列化hibernate懒加载问题 -->
+	<!-- Jackson Mapper -->
+	<bean id="jsonMapper" class="com.szhis.frsoft.common.mapper.jackson.JsonMapper">
+		<constructor-arg type="javax.persistence.EntityManagerFactory"
+			ref="entityManagerFactory" />
+	</bean>
+	<bean id="stringHttpMessageConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter"
+		lazy-init="true">
+		<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+		<constructor-arg value="UTF-8" />
+	</bean>
+	<bean id="jackson2HttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
+		lazy-init="true">
+		<!-- 将Jackson2HttpMessageConverter的默认格式化输出设为true -->
+		<property name="prettyPrint" value="true" />
+		<property name="objectMapper" ref="jsonMapper" />
+	</bean>
+	<!-- 需要在xml头中加入schema util -->
+	<util:list id="messageConverters">
+		<ref bean="stringHttpMessageConverter" />
+		<ref bean="jackson2HttpMessageConverter" />
+	</util:list>
+	<!-- restTemplate -->
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate"
+		lazy-init="true">
+		<constructor-arg ref="messageConverters" />
+		<property name="requestFactory">
+			<bean
+				class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+				<property name="readTimeout" value="15000" />
+				<property name="connectTimeout" value="15000" />
+			</bean>
+		</property>
+		<property name="errorHandler">
+			<bean class="org.springframework.web.client.DefaultResponseErrorHandler"></bean>
+		</property>
+	</bean>
+
 </beans>

@@ -1,4 +1,4 @@
-package com.szhis.frsoft.common;
+package com.szhis.frsoft.common.ds;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

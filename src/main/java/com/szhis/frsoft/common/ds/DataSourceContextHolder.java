@@ -1,4 +1,4 @@
-package com.szhis.frsoft.common;
+package com.szhis.frsoft.common.ds;
 
 /**
  * @desc 设置数据源类型key

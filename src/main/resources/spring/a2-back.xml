@@ -45,7 +45,7 @@
 		<property name="maxPoolSize" value="${dbTwo.jdbc.maxPoolSize}" />
 	</bean>
 
-	<bean id="dynamicDataSource" class="com.szhis.frsoft.common.DynamicDataSource">
+	<bean id="dynamicDataSource" class="com.szhis.frsoft.common.ds.DynamicDataSource">
 		<property name="targetDataSources">
 			<map key-type="java.lang.String">
 				<entry key="dataSourceOne" value-ref="dataSourceOne"></entry>

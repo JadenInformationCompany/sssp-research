@@ -7,10 +7,9 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.stereotype.Component;
 
 import com.szhis.frsoft.aop.anno.DataSourceExchange;
-import com.szhis.frsoft.common.DataSourceContextHolder;
+import com.szhis.frsoft.common.ds.DataSourceContextHolder;
 
 //@Component
 @Aspect
