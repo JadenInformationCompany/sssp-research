@@ -10,13 +10,17 @@
     <script type="text/javascript">
         $(function () {
             console.log('how are you');
+            $('#formAdd').ajaxSubmit(function (resp) {
+                console.log(resp)
+                return false;
+            });
         });
     </script>
 
 </head>
 <body>
 <div>
-    <form action="/api/department" method="post">
+    <form id="formAdd" action="/api/department" method="post">
         <input type="hidden" name="id">
         <ul>
             <li>
