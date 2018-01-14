@@ -15,6 +15,7 @@ import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Table(name = "SSSP_EMPLOYEES")
 @Entity
+@DynamicUpdate
 public class Employee {
 	private Integer id;
 	private String lastName;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.szhis.frsoft.aop.anno.DataSourceExchange;
 import com.szhis.frsoft.common.DataSourceContextHolder;
 
-@Component
+//@Component
 @Aspect
 public class DataSourceAdvice {
 

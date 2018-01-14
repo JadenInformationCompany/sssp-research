@@ -1,5 +1,5 @@
 package com.szhis.frsoft.web;
 
-public class EmployeeHandler {
+public class EmployeeController {
 	
 }

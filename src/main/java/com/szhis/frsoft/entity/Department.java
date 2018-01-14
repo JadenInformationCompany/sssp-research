@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 /**
  * @desc @Cacheable(true)使用二级缓存
  * @author jaden.liu
@@ -16,6 +18,7 @@ import javax.persistence.TableGenerator;
  */
 @Table(name = "SSSP_DEPARTMENTS")
 @Entity
+@DynamicUpdate
 public class Department {
 	private Integer id;
 	private String departmentName;
