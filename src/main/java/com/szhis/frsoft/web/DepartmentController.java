@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.szhis.frsoft.entity.Department;
 import com.szhis.frsoft.service.DepartmentService;
@@ -16,6 +17,7 @@ public class DepartmentController {
 	private DepartmentService departmentService;
 
 	@RequestMapping(method = { RequestMethod.POST })
+	@ResponseBody
 	public Department saveBean(@RequestBody Department dept) {
 		departmentService.saveBean(dept);
 		return dept;

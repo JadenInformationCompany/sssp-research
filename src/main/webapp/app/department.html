@@ -3,33 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>部门表</title>
-    <!-- jQuery -->
+    <!-- jQuery简化dom操作 -->
     <script type="text/javascript" src="/static/jquery/jquery-1.11.3.js"></script>
-
+    <!-- easyui界面渲染 -->
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
+    <!-- layer弹出层 -->
+    <script type="text/javascript" src="/static/layui/layer/layer.js"></script>
     <!-- 本页面脚本 -->
     <script type="text/javascript">
         $(function () {
             console.log('how are you');
-            $('#formAdd').ajaxSubmit(function (resp) {
-                console.log(resp)
-                return false;
-            });
+            //扩展jQuery方法
+            $.fn.serializeJson = function () {
+                var serializeObj = {};
+                var array = this.serializeArray();
+                $(array).each(function () {
+                    if (serializeObj[this.name]) {
+                        if ($.isArray(serializeObj[this.name])) {
+                            serializeObj[this.name].push(this.value);
+                        } else {
+                            serializeObj[this.name] = [serializeObj[this.name], this.value];
+                        }
+                    } else {
+                        serializeObj[this.name] = this.value;
+                    }
+                });
+                return JSON.stringify(serializeObj);
+            };
         });
+        function submitForm() {
+            var flag = $('#formAdd').form('enableValidation').form('validate');
+            if (!flag) {
+                return false;
+            }
+            var data = $('#formAdd').serializeJson();
+            $.ajax({
+                url: '/api/department',
+                type: 'post',
+                data: data,
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                success: function (resp) {
+                    layer.alert('你好吗' + JSON.stringify(resp));
+                }
+            });
+        }
+
+        function clearForm() {
+            $('#formAdd').form('clear');
+        }
     </script>
 
 </head>
 <body>
-<div>
-    <form id="formAdd" action="/api/department" method="post">
-        <input type="hidden" name="id">
-        <ul>
-            <li>
-                <lable>部门名称：</lable>
-                <div><input type="text" name="departmentName"></div>
-            </li>
-        </ul>
-        <input type="submit" value="提交表单数据">
-    </form>
+<div class="easyui-panel" title="这个是我的主题" style="width:400px">
+    <div style="padding:10px 60px 20px 60px">
+        <form id="formAdd" method="post">
+            <input type="hidden" name="id">
+            <table cellpadding="5">
+                <tr>
+                    <td>部门名称:</td>
+                    <td><input class="easyui-textbox"
+                               type="text"
+                               name="departmentName"
+                               data-options="required:true"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div style="text-align:center;padding:5px">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>
