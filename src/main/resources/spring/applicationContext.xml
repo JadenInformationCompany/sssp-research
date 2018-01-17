@@ -20,7 +20,7 @@
 
 	<!-- 配置数据源，引用外部属性文件 -->
 	<context:property-placeholder location="classpath:property/db.properties" />
-	
+
 	<!-- 数据源1: mysql -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -33,20 +33,8 @@
 		<property name="maxPoolSize" value="${dbOne.jdbc.maxPoolSize}" />
 	</bean>
 
-	<!-- 数据源2: mysql -->
-	<bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="${dbTwo.jdbc.driverClass}" />
-		<property name="jdbcUrl" value="${dbTwo.jdbc.url}" />
-		<property name="user" value="${dbTwo.jdbc.user}" />
-		<property name="password" value="${dbTwo.jdbc.password}" />
-		<property name="initialPoolSize" value="${dbTwo.jdbc.initialPoolSize}" />
-		<property name="minPoolSize" value="${dbTwo.jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${dbTwo.jdbc.maxPoolSize}" />
-	</bean>
-
-	<!-- 配置 JPA 的 EntityManagerFactory -->
-	<bean id="entityManagerFactory"
+	<!-- 数据源1: 配置jpa实体工厂 -->
+	<bean id="entityManagerFactory" autowire="byName"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 		<!-- 配置orm实现者:hibernate,mybatis -->
@@ -69,18 +57,57 @@
 		<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>
 	</bean>
 
-	<!-- 配置事务 -->
+	<!-- 数据源1: 配置事务 -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
 	</bean>
 
-	<!-- 配置支持基于注解的事务 -->
+	<!-- 数据源1: 配置支持基于注解的事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<!-- 配置 SpringData,启用扫描并自动创建代理的功能 -->
-	<jpa:repositories base-package="com.szhis.frsoft.repository"
-		transaction-manager-ref="transactionManager"
-		entity-manager-factory-ref="entityManagerFactory">
-	</jpa:repositories>
+
+	<!-- 数据源2: mysql -->
+	<bean id="dataSourceTwo" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${dbTwo.jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${dbTwo.jdbc.url}" />
+		<property name="user" value="${dbTwo.jdbc.user}" />
+		<property name="password" value="${dbTwo.jdbc.password}" />
+		<property name="initialPoolSize" value="${dbTwo.jdbc.initialPoolSize}" />
+		<property name="minPoolSize" value="${dbTwo.jdbc.minPoolSize}" />
+		<property name="maxPoolSize" value="${dbTwo.jdbc.maxPoolSize}" />
+	</bean>
+
+	<!-- 数据源2: 配置jpa实体工厂 -->
+	<bean id="entityManagerFactory2" autowire="byName"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置orm实现者:hibernate,mybatis -->
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+		</property>
+		<!-- 扫描jpa需要持久化的entity -->
+		<property name="packagesToScan" value="com.szhis.frsoft.entity"></property>
+		<property name="jpaProperties">
+			<props>
+				<!-- 自动生成表，不建议使用 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- 配置连接的数据库:mysql,sqlServer,oracle -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+			</props>
+		</property>
+		<!-- 配置使用二级缓存的模式：只允许带有 @Cacheable 的类使用二级缓存 -->
+		<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>
+	</bean>
+
+	<!-- 数据源2: 配置事务 -->
+	<bean id="transactionManager2" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory2"></property>
+	</bean>
+
+	<!-- 数据源2: 配置支持基于注解的事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager2" />
 
 </beans>
